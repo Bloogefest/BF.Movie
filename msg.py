@@ -21,7 +21,11 @@ MSG_CMD_SEARCH_CONFIRM = """\
 """
 
 MSG_CMD_SEARCH_FILTERS = """\
-Фильтры временно недоступны.
+Выберите действие.
+"""
+
+MSG_CMD_SEARCH_FILTERS_RESET = """\
+Сброс фильтров временно недоступен.
 """
 
 MSG_CMD_HELP = """\

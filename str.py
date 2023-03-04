@@ -11,6 +11,7 @@ STR_CMD_HOME = "/home"
 STR_CMD_SEARCH = "/search"
 STR_CMD_SEARCH_CONFIRM = "/search-confirm"
 STR_CMD_SEARCH_FILTERS = "/search-filters"
+STR_CMD_SEARCH_FILTERS_RESET = "/search-filters-reset"
 STR_CMD_HELP = "/help"
 STR_CMD_ABOUT = "/about"
 
@@ -25,6 +26,7 @@ STR_MENU_SEARCH_BTN_CONFIRM = "Подтвердить"
 STR_MENU_SEARCH_BTN_FILTERS = "Фильтры"
 
 STR_MENU_SEARCH_FILTERS_BTN_PARENT = "К поиску"
+STR_MENU_SEARCH_FILTERS_BTN_RESET = "Сбросить"
 
 STR_MENU_HELP_BTN_HOME = "В главное меню"
 

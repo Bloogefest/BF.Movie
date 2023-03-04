@@ -32,7 +32,7 @@ TG_MENU_SEARCH_MARKUP.add(KeyboardButton(STR_MENU_SEARCH_BTN_HOME), KeyboardButt
 TG_MENU_SEARCH = TGMenu(parent = TG_MENU_HOME, markup = TG_MENU_SEARCH_MARKUP)
 
 TG_MENU_SEARCH_FILTERS_MARKUP = ReplyKeyboardMarkup(resize_keyboard = True)
-TG_MENU_SEARCH_FILTERS_MARKUP.add(KeyboardButton(STR_MENU_SEARCH_FILTERS_BTN_PARENT))
+TG_MENU_SEARCH_FILTERS_MARKUP.add(KeyboardButton(STR_MENU_SEARCH_FILTERS_BTN_PARENT), KeyboardButton(STR_MENU_SEARCH_FILTERS_BTN_RESET))
 TG_MENU_SEARCH_FILTERS = TGMenu(parent = TG_MENU_SEARCH, markup = TG_MENU_SEARCH_FILTERS_MARKUP)
 
 TG_MENU_HELP_MARKUP = ReplyKeyboardMarkup(resize_keyboard = True)
@@ -98,6 +98,11 @@ async def search_filters(message: Message) -> None:
     tg_set_menu(TG_MENU_SEARCH_FILTERS)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_SEARCH_FILTERS)
+
+@tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_RESET, STR_MENU_SEARCH_FILTERS_BTN_RESET))
+async def search_filters_reset(message: Message) -> None:
+    tg_handle_message(message)
+    await tg_reply_message(message, MSG_CMD_SEARCH_FILTERS_RESET)
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_HELP, STR_MENU_HOME_BTN_HELP))
 async def help_(message: Message) -> None:
