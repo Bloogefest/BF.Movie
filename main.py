@@ -3,7 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 from log import *
-from tg import *
+from tg import tg_launch
 
 if __name__ == "__main__":
     log_init()
