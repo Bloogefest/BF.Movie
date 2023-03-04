@@ -12,12 +12,13 @@ from str import *
 from msg import *
 from log import *
 from wl import *
+from kp import *
 
 TG_INSTANCE: AsyncTeleBot
 
 class TGMenu:
 
-    def __init__(self, parent = None, markup: ReplyKeyboardMarkup = None):
+    def __init__(self, parent = None, markup: ReplyKeyboardMarkup = None) -> None:
         self.parent = self if parent is None else parent
         self.markup = markup
 
@@ -43,7 +44,12 @@ TG_MENU_ABOUT_MARKUP = ReplyKeyboardMarkup(resize_keyboard = True)
 TG_MENU_ABOUT_MARKUP.add(KeyboardButton(STR_MENU_ABOUT_BTN_HOME))
 TG_MENU_ABOUT = TGMenu(parent = TG_MENU_HOME, markup = TG_MENU_ABOUT_MARKUP)
 
-TG_CURRENT_MENU = TG_MENU_HOME
+class TGSession:
+
+    def __init__(self, menu: TGMenu = TG_MENU_HOME):
+        self.menu = menu
+
+TG_SESSION_DICT = dict[int, TGSession]()
 
 def tg_get_instance() -> AsyncTeleBot:
     global TG_INSTANCE
@@ -61,30 +67,39 @@ def tg_check_message(message: Message, *signatures: str) -> bool:
 def tg_check_signature(message: Message, signatures: tuple[str]) -> bool:
     return message.text in signatures
 
-def tg_set_menu(menu: TGMenu) -> None:
-    global TG_CURRENT_MENU
-    TG_CURRENT_MENU = menu
+def tg_get_session(user_id: int) -> TGSession:
+    global TG_SESSION_DICT
+    if user_id in TG_SESSION_DICT:
+        return TG_SESSION_DICT[user_id]
+    session = TG_SESSION_DICT[user_id] = TGSession(TG_MENU_HOME)
+    return session
+
+def tg_get_menu(user_id: int) -> TGMenu:
+    return tg_get_session(user_id).menu
+
+def tg_set_menu(user_id: int, menu: TGMenu) -> None:
+    tg_get_session(user_id).menu = menu
 
 def tg_handle_message(message: Message) -> None:
     log_get_logger("tg").debug(f"[ID/{message.from_user.id}] [Name/{message.from_user.first_name}{'' if message.from_user.last_name is None else ' ' + message.from_user.last_name}] {message.text}")
 
 async def tg_reply_message(message: Message, text: str) -> None:
-    await TG_INSTANCE.reply_to(message, text, reply_markup = TG_CURRENT_MENU.markup)
+    await TG_INSTANCE.reply_to(message, text, reply_markup = tg_get_menu(message.from_user.id).markup)
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_START))
 async def start(message: Message) -> None:
-    tg_set_menu(TG_MENU_HOME)
+    tg_set_menu(message.from_user.id, TG_MENU_HOME)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_START)
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_HOME, STR_MENU_SEARCH_BTN_HOME, STR_MENU_HELP_BTN_HOME, STR_MENU_ABOUT_BTN_HOME))
 async def home(message: Message) -> None:
-    tg_set_menu(TG_MENU_HOME)
+    tg_set_menu(message.from_user.id, TG_MENU_HOME)
     await tg_reply_message(message, MSG_CMD_HOME)
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_SEARCH, STR_MENU_HOME_BTN_SEARCH, STR_MENU_SEARCH_FILTERS_BTN_PARENT))
 async def search(message: Message) -> None:
-    tg_set_menu(TG_MENU_SEARCH)
+    tg_set_menu(message.from_user.id, TG_MENU_SEARCH)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_SEARCH)
 
@@ -95,7 +110,7 @@ async def search_confirm(message: Message) -> None:
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS, STR_MENU_SEARCH_BTN_FILTERS))
 async def search_filters(message: Message) -> None:
-    tg_set_menu(TG_MENU_SEARCH_FILTERS)
+    tg_set_menu(message.from_user.id, TG_MENU_SEARCH_FILTERS)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_SEARCH_FILTERS)
 
@@ -106,12 +121,12 @@ async def search_filters_reset(message: Message) -> None:
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_HELP, STR_MENU_HOME_BTN_HELP))
 async def help_(message: Message) -> None:
-    tg_set_menu(TG_MENU_HELP)
+    tg_set_menu(message.from_user.id, TG_MENU_HELP)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_HELP)
 
 @tg_get_instance().message_handler(func=lambda message: tg_check_message(message, STR_CMD_ABOUT, STR_MENU_HOME_BTN_ABOUT))
 async def about(message: Message) -> None:
-    tg_set_menu(TG_MENU_ABOUT)
+    tg_set_menu(message.from_user.id, TG_MENU_ABOUT)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_ABOUT)
