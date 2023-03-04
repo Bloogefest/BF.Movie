@@ -2,6 +2,16 @@
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+from telebot import *
+from telebot.async_telebot import *
+from asyncio import run
+
+from cfg import *
+from str import *
+from msg import *
+from log import *
+from wl import *
+from session import *
 from menu import *
 
 TG_INSTANCE: AsyncTeleBot
@@ -55,19 +65,19 @@ async def search_confirm(message: Message) -> None:
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_SEARCH_CONFIRM)
 
-@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS, STR_MENU_SEARCH_BTN_FILTERS, STR_MENU_SEARCH_FILTERS_MOVIE_TYPE_BTN_PARENT))
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS, STR_MENU_SEARCH_BTN_FILTERS, STR_MENU_SEARCH_FILTERS_MOVIE_TYPE_BTN_PARENT, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_PARENT))
 async def search_filters(message: Message) -> None:
     session_menu_set(message.from_user.id, MENU_SEARCH_FILTERS)
     tg_handle_message(message)
     await tg_reply_message(message, MSG_CMD_SEARCH_FILTERS)
+
+# SEARCH FILTER MOVIE TYPE MENU #
 
 @tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_TYPE, STR_MENU_SEARCH_FILTERS_BTN_MOVIE_TYPE))
 async def search_filters_movie_type(message: Message) -> None:
     session_menu_set(message.from_user.id, MENU_SEARCH_FILTERS_MOVIE_TYPE)
     tg_handle_message(message)
     await tg_reply_message(message, msg_get_cmd_search_filters_movie_type(session_get(message.from_user.id)))
-
-# SEARCH FILTER MOVIE TYPE MENU #
 
 @tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_TYPE_MOVIE, STR_MENU_SEARCH_FILTERS_MOVIE_TYPE_BTN_MOVIE))
 async def movie_type_movie(message: Message) -> None:
@@ -105,13 +115,59 @@ async def movie_type_tv_show(message: Message) -> None:
     session_get(message.from_user.id).search_filter_movie_type.handle_type(KPMovieType.TV_SHOW)
     await tg_reply_message(message, msg_get_cmd_search_filters_movie_type(session_get(message.from_user.id)))
 
-# SEARCH FILTER MOVIE TYPE MENU #
-
 @tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_TYPE_RESET, STR_MENU_SEARCH_FILTERS_MOVIE_TYPE_BTN_RESET, menu = MENU_SEARCH_FILTERS_MOVIE_TYPE))
 async def search_filters_movie_type_reset(message: Message) -> None:
     tg_handle_message(message)
     session_get(message.from_user.id).search_filter_movie_type.clear()
     await tg_reply_message(message, msg_get_cmd_search_filters_movie_type(session_get(message.from_user.id)))
+
+# SEARCH FILTER MOVIE TYPE MENU #
+
+# SEARCH FILTER MOVIE STATUS MENU #
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS, STR_MENU_SEARCH_FILTERS_BTN_MOVIE_STATUS))
+async def search_filters_movie_status(message: Message) -> None:
+    session_menu_set(message.from_user.id, MENU_SEARCH_FILTERS_MOVIE_STATUS)
+    tg_handle_message(message)
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS_FILMING, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_FILMING))
+async def movie_status_filming(message: Message) -> None:
+    tg_handle_message(message)
+    session_get(message.from_user.id).search_filter_movie_status.handle_type(KPMovieStatus.FILMING)
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS_PRE_PRODUCTION, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_PRE_PRODUCTION))
+async def movie_status_pre_production(message: Message) -> None:
+    tg_handle_message(message)
+    session_get(message.from_user.id).search_filter_movie_status.handle_type(KPMovieStatus.PRE_PRODUCTION)
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS_COMPLETED, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_COMPLETED))
+async def movie_status_completed(message: Message) -> None:
+    tg_handle_message(message)
+    session_get(message.from_user.id).search_filter_movie_status.handle_type(KPMovieStatus.COMPLETED)
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS_ANNOUNCED, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_ANNOUNCED))
+async def movie_status_announced(message: Message) -> None:
+    tg_handle_message(message)
+    session_get(message.from_user.id).search_filter_movie_status.handle_type(KPMovieStatus.ANNOUNCED)
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS_POST_PRODUCTION, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_POST_PRODUCTION))
+async def movie_status_post_production(message: Message) -> None:
+    tg_handle_message(message)
+    session_get(message.from_user.id).search_filter_movie_status.handle_type(KPMovieStatus.POST_PRODUCTION)
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+@tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_MOVIE_STATUS_RESET, STR_MENU_SEARCH_FILTERS_MOVIE_STATUS_BTN_RESET, menu = MENU_SEARCH_FILTERS_MOVIE_STATUS))
+async def search_filters_movie_status_reset(message: Message) -> None:
+    tg_handle_message(message)
+    session_get(message.from_user.id).search_filter_movie_status.clear()
+    await tg_reply_message(message, msg_get_cmd_search_filters_movie_status(session_get(message.from_user.id)))
+
+# SEARCH FILTER MOVIE STATUS MENU #
 
 @tg_get_instance().message_handler(func = lambda message: tg_check_message(message, STR_CMD_SEARCH_FILTERS_RESET, STR_MENU_SEARCH_FILTERS_BTN_RESET, menu = MENU_SEARCH_FILTERS))
 async def search_filters_reset(message: Message) -> None:

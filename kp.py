@@ -53,6 +53,41 @@ class KPTypeFilter(KPFilter):
     def check_exists_type(self, type_: KPMovieType) -> bool:
         return type_ in self.types
 
+class KPMovieStatus(Enum):
+    FILMING = "filming"
+    PRE_PRODUCTION = "pre-production"
+    COMPLETED = "completed"
+    ANNOUNCED = "announced"
+    POST_PRODUCTION = "post-production"
+
+class KPStatusFilter(KPFilter):
+
+    def __init__(self, statuses: list[KPMovieStatus] = None) -> None:
+        self.statuses = list() if statuses is None else statuses
+
+    def to_kp_api(self) -> list[MovieParams]:
+        return [MovieParams(Field.STATUS, status.name) for status in self.statuses]
+
+    def add_type(self, status: KPMovieStatus) -> None:
+        if status not in self.statuses:
+            self.statuses.append(status)
+
+    def remove_type(self, status: KPMovieStatus) -> None:
+        if status in self.statuses:
+            self.statuses.remove(status)
+
+    def handle_type(self, status: KPMovieStatus) -> None:
+        if status in self.statuses:
+            self.statuses.remove(status)
+        else:
+            self.statuses.append(status)
+
+    def clear(self) -> None:
+        self.statuses.clear()
+
+    def check_exists_type(self, status: KPMovieType) -> bool:
+        return status in self.types
+
 def kp_get_instance() -> KinopoiskDev:
     global KP_INSTANCE
     if "KP_INSTANCE" in globals():

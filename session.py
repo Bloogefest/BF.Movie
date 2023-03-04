@@ -4,12 +4,14 @@
 
 from kp import *
 from tg import *
+from menu import *
 
 class Session:
 
-    def __init__(self, menu: Menu, search_filter_movie_type: KPTypeFilter = KPTypeFilter()):
+    def __init__(self, menu: Menu, search_filter_movie_type: KPTypeFilter = KPTypeFilter(), search_filter_movie_status: KPStatusFilter = KPStatusFilter()):
         self.menu = menu
         self.search_filter_movie_type = search_filter_movie_type
+        self.search_filter_movie_status = search_filter_movie_status
 
 SESSION_DICT = dict[int, Session]()
 
