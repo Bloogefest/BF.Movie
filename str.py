@@ -45,6 +45,10 @@ STR_MENU_SEARCH_BTN_HOME = "В главное меню"
 STR_MENU_SEARCH_BTN_CONFIRM = "Подтвердить"
 STR_MENU_SEARCH_BTN_FILTERS = "Фильтры"
 
+STR_MENU_SEARCH_RESULTS_BTN_NEXT = "Следующий"
+STR_MENU_SEARCH_RESULTS_BTN_PREVIOUS = "Предыдущий"
+STR_MENU_SEARCH_RESULTS_BTN_PARENT = "К поиску"
+
 STR_MENU_SEARCH_FILTERS_BTN_MOVIE_TYPE = "По типу"
 STR_MENU_SEARCH_FILTERS_BTN_MOVIE_STATUS = "По статусу"
 STR_MENU_SEARCH_FILTERS_BTN_PARENT = "К поиску"
@@ -81,3 +85,120 @@ STR_MSG_SEARCH_FILTERS_MOVIE_TYPE_SELECTED_PREFIX = "\n- "
 
 STR_MSG_SEARCH_FILTERS_MOVIE_STATUS_NOT_SELECTED = "\nНичего"
 STR_MSG_SEARCH_FILTERS_MOVIE_STATUS_SELECTED_PREFIX = "\n- "
+
+# STR_CMD
+
+STR_CMD_SCHEMA = {
+    "/": {
+        "start": lambda msg: None,
+        "home": lambda msg: None,
+        "search": {
+            "results": {
+                "previous": lambda msg: None,
+                "open": lambda msg: None,
+                "next": lambda msg: None
+            },
+            "confirm": lambda msg: None,
+            "filters": {
+                "type": {
+                    "movie": lambda msg: None,
+                    "tv-series": lambda msg: None,
+                    "cartoon": lambda msg: None,
+                    "anime": lambda msg: None,
+                    "animated-series": lambda msg: None,
+                    "tv-show": lambda msg: None,
+                    "reset": lambda msg: None
+                },
+                "status": {
+                    "filming": lambda msg: None,
+                    "pre-production": lambda msg: None,
+                    "completed": lambda msg: None,
+                    "announced": lambda msg: None,
+                    "post-production": lambda msg: None,
+                    "reset": lambda msg: None
+                },
+                "reset": lambda msg: None
+            }
+        },
+        "help": {},
+        "about": {}
+    }
+}
+
+STR_CMD_ELEMENT_SEPARATOR = " "
+
+# STR_MENU
+
+STR_MENU_SCHEMA_HOME = {
+    "Поиск": lambda msg: None,
+    {
+        "Справка": lambda msg: None,
+        "О боте": lambda msg: None
+    }: None
+}
+
+STR_MENU_SCHEMA_SEARCH = {
+    "Искать": lambda msg: None,
+    {
+        "В главное меню": lambda msg: None,
+        "Фильтры": lambda msg: None
+    }: None
+}
+
+STR_MENU_SCHEMA_SEARCH_RESULTS = {
+    "Предыдущий": lambda msg: None,
+    "Открыть в Кинопоиске": lambda msg: None,
+    "Следующий": lambda msg: None
+}
+
+STR_MENU_SCHEMA_SEARCH_FILTERS = {
+    {
+        "По типу": lambda msg: None,
+        "По статусу": lambda msg: None
+    }: None,
+    {
+        "К поиску": lambda msg: None,
+        "Сбросить": lambda msg: None
+    }: None
+}
+
+STR_MENU_SCHEMA_SEARCH_FILTERS_TYPE = {
+    {
+        "Фильм": lambda msg: None,
+        "Телесериал": lambda msg: None
+    }: None,
+    {
+        "Мультфильм": lambda msg: None,
+        "Аниме": lambda msg: None
+    }: None,
+    {
+        "Анимационный сериал": lambda msg: None,
+        "Телешоу": lambda msg: None
+    }: None,
+    {
+        "К фильтрам": lambda msg: None,
+        "Сбросить": lambda msg: None
+    }: None
+}
+
+STR_MENU_SCHEMA_SEARCH_FILTERS_STATUS = {
+    {
+        "Анонсирован": lambda msg: None,
+        "Снимается": lambda msg: None
+    }: None,
+    "На предпроизводственном этапе": lambda msg: None,
+    "На послепроизводственном этапе": lambda msg: None,
+    "Завершён": lambda msg: None,
+    {
+        "К фильтрам": lambda msg: None,
+        "Сбросить": lambda msg: None
+    }: None
+}
+
+STR_MENU_SCHEMA_HELP = {
+    "В главное меню": lambda msg: None
+}
+
+STR_MENU_SCHEMA_ABOUT = {
+    "В главное меню": lambda msg: None
+}

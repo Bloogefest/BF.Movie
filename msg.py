@@ -3,7 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 from cfg import CFG_BOT_VERSION, CFG_BOT_IN_DEVELOPMENT
-from session import Session
+from session import OldSession
 from str import *
 
 # MSG_WL
@@ -57,7 +57,7 @@ MSG_CMD_ABOUT = f"""\
 Статус: {STR_MSG_ABOUT_STATUS_IN_DEVELOPMENT if CFG_BOT_IN_DEVELOPMENT else STR_MSG_ABOUT_STATUS_IN_PRODUCTION}
 """
 
-def msg_get_cmd_search_filters_movie_type(session: Session) -> str:
+def msg_get_cmd_search_filters_movie_type(session: OldSession) -> str:
     msg = MSG_CMD_SEARCH_FILTERS_MOVIE_TYPE
     any_exists = False
     if len(session.search_filter_movie_type.types) > 0:
@@ -66,7 +66,7 @@ def msg_get_cmd_search_filters_movie_type(session: Session) -> str:
         msg += STR_MSG_SEARCH_FILTERS_MOVIE_TYPE_NOT_SELECTED
         return msg
 
-def msg_get_cmd_search_filters_movie_status(session: Session) -> str:
+def msg_get_cmd_search_filters_movie_status(session: OldSession) -> str:
     msg = MSG_CMD_SEARCH_FILTERS_MOVIE_STATUS
     any_exists = False
     if len(session.search_filter_movie_status.statuses) > 0:

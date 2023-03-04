@@ -72,7 +72,9 @@ def cfg_wl_src() -> list[int]:
     global CFG_WL_SRC
     if "CFG_WL_SRC" in globals():
         return CFG_WL_SRC
-    with open(file = CFG_WL_PATH, mode = CFG_WL_MODE, encoding = CFG_WL_ENCODING) as wl:
+    with open(file = CFG_WL_PATH,
+              mode = CFG_WL_MODE,
+              encoding = CFG_WL_ENCODING) as wl:
         if not wl.readable():
             raise CFGException()
         CFG_WL_SRC = [int(wlr.strip()) for wlr in wl.readlines()]
@@ -84,7 +86,9 @@ def cfg_tg_tkn_src() -> str:
     global CFG_TG_TKN_SRC
     if "CFG_TG_TKN_SRC" in globals():
         return CFG_TG_TKN_SRC
-    with open(file = CFG_TG_TKN_PATH, mode = CFG_TG_TKN_MODE, encoding = CFG_TG_TKN_ENCODING) as tkn:
+    with open(file = CFG_TG_TKN_PATH,
+              mode = CFG_TG_TKN_MODE,
+              encoding = CFG_TG_TKN_ENCODING) as tkn:
         if not tkn.readable():
             raise CFGException()
         CFG_TG_TKN_SRC = "".join(tkn.readlines()).strip()
@@ -96,7 +100,9 @@ def cfg_kp_tkn_src() -> str:
     global CFG_KP_TKN_SRC
     if "CFG_KP_TKN_SRC" in globals():
         return CFG_KP_TKN_SRC
-    with open(file = CFG_KP_TKN_PATH, mode = CFG_KP_TKN_MODE, encoding = CFG_KP_TKN_ENCODING) as tkn:
+    with open(file = CFG_KP_TKN_PATH,
+              mode = CFG_KP_TKN_MODE,
+              encoding = CFG_KP_TKN_ENCODING) as tkn:
         if not tkn.readable():
             raise CFGException()
         CFG_KP_TKN_SRC = "".join(tkn.readlines()).strip()
@@ -110,3 +116,5 @@ def cfg_log_lvl() -> int:
         return CFG_LOG_LVL
     CFG_LOG_LVL = CFG_LOG_IN_DEVELOPMENT_LVL if CFG_BOT_IN_DEVELOPMENT else CFG_LOG_PRODUCTION_LVL
     return CFG_LOG_LVL
+
+# NAPI
