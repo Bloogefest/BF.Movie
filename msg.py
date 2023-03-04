@@ -6,6 +6,14 @@ from cfg import CFG_BOT_VERSION, CFG_BOT_IN_DEVELOPMENT
 from session import Session
 from str import *
 
+# MSG_WL
+
+MSG_WL_NOT_LISTED = """\
+Вы не числитесь в белом списке.
+"""
+
+# MSG_CMD
+
 MSG_CMD_START = """\
 Выберите действие.
 """
