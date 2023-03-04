@@ -8,7 +8,7 @@ from logging import *
 
 CFG_BOT_ID = "bf_movie_bot"
 CFG_BOT_NAME = "BF.Movie"
-CFG_BOT_VERSION = "1.0-alpha"
+CFG_BOT_VERSION = "1.0"
 
 CFG_BOT_IN_DEVELOPMENT = True
 
